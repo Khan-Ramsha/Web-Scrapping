@@ -30,31 +30,35 @@ def index():
            name= i.text
            print(name)
            Product_name.append(name)
-           Price=[]
+        
+        Price=[]
         soup = BeautifulSoup(r.text, 'html.parser') 
         price=soup.find_all("div",class_="product-price")
         for i in price:
             prices = i.text
             Price.append(prices)
         #d-sm-ib pl4-sm
-        Stars=[]
-        stars=soup.find_all("div",class_="detail")
-        for i in stars:
-          star = i.text
-        Stars.append(star)
+        # Stars=[]
+        # stars=soup.find_all("div",class_="detail")
+        # for i in stars:
+        #   star = i.text
+        # Stars.append(star)
+        
         subtitle=[]
         soup = BeautifulSoup(r.text, 'html.parser') 
         sub=soup.find_all("div",class_="product-card__subtitle")
         for i in sub:
             sub = i.text
             subtitle.append(sub)
+        
         Color=[]
         soup = BeautifulSoup(r.text, 'html.parser') 
         color=soup.find_all("div",class_="product-card__product-count")
         for i in color:
             color = i.text
             # print(color)
-        Color.append(color)
+            Color.append(color)
+        
         filename = searchString + ".csv"
         fw = open(filename, "w")
         headers = "Product_Name,Prices,Product_Subtitle,Product_Color_Count  \n"
@@ -62,11 +66,14 @@ def index():
         reviews = []
         mydict={"Product Name":Product_name,"Prices":Price,"Product Subtitle":subtitle,"Product Color Count":Color}
         reviews.append(mydict)
-        return render_template('results.html', reviews=reviews[0:(len(reviews)-1)])
-
+        return render_template('results.html', reviews=reviews[0:(len(reviews)-1)]) # ye karne ki kya zarurat?
+    
     else:
         return render_template('index.html')
     
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=5001, debug=True)
 	#app.run(debug=True)
+
+
+# tune band kar di print() ??haa chalu kar 
