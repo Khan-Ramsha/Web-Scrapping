@@ -22,6 +22,13 @@ def index():
     if request.method == "POST":
         searchString = request.form["content"].replace(" ", "")
         url = "https://www.nike.com/in/w?q=" + searchString
+        
+        filename = searchString + ".csv"
+        fw = open(filename, "w")
+        headers = "Product_Name,Prices,Product_Subtitle,Product_Color_Count  \n"
+        fw.write(headers)
+        reviews = []
+
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser') 
         Product_name=[]
@@ -58,15 +65,9 @@ def index():
             color = i.text
             # print(color)
             Color.append(color)
-        
-        filename = searchString + ".csv"
-        fw = open(filename, "w")
-        headers = "Product_Name,Prices,Product_Subtitle,Product_Color_Count  \n"
-        fw.write(headers)
-        reviews = []
-        mydict={"Product Name":Product_name,"Prices":Price,"Product Subtitle":subtitle,"Product Color Count":Color}
-        reviews.append(mydict)
-        return render_template('results.html', reviews=reviews[0:(len(reviews)-1)]) # ye karne ki kya zarurat?
+        mydict = {"Product_Name": Product_name, "Prices": Price, "Product_Subtitle": subtitle, "Product_Color_Count": Color}
+        print(mydict)
+        return render_template('results.html',  mydict=mydict) 
     
     else:
         return render_template('index.html')
