@@ -41,7 +41,7 @@ def index():
         df.to_csv(filename, index=False, encoding='utf-8')
         # Convert DataFrame to a list of dictionaries
         records = df.to_dict(orient='records')
-        client =pymongo.MongoClient('mongodb+srv://khan-ramsha:Qrc7Q2qqyUFEXv2X@cluster0.gnvdais.mongodb.net/?retryWrites=true&w=majority')
+        client =pymongo.MongoClient('mongodb+srv://khan-ramsha:<password>X@cluster0.gnvdais.mongodb.net/?retryWrites=true&w=majority')
         db=client['scrap']
         col=db['scrap_data']
         col.insert_many(records) # Insert records into MongoDB
